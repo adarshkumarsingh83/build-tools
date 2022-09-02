@@ -1,0 +1,753 @@
+1.Environment Settings
+-----------------------------
+The \bin folder of your gradle distribution contains the gradle script file 
+(both Unix and Windows) that you will use to run the gradle 
+command along with various parameters.
+
+Ideally, do the following:
+Create an environment variable GRADLE_HOME and point it to the Gradle Installation folder. 
+On machine, the Gradle installation folder is c:\gradle-2.0 and hence 
+create a GRADLE_HOME Environment variable that has the value c:\gradle-2.0
+Add %GRADLE_HOME%\bin to the PATH environment variable. 
+This will allow you to launch gradle command from any directory.
+
+Verify Gradle Set-up
+--------------------------
+To verify our set up, go to the command prompt / terminal and type the following:
+gradle -v
+
+
+Basic Gradle commands
+-----------------------
+a:basic help information for Gradle. The -q parameter is just
+ for quiet mode in the console output. 
+$> gradle -q help
+
+b:This shows a list of tasks that are already available 
+$> gradle -q tasks
+
+c: list of several properties that are preconfigured
+$> gradle properties
+
+d:to verify the setup
+$> gradle
+
+Exmaples.1
+===========================================================
+1.Create a Dir and create a file build.gradle inside.
+===========================================================
+
+task compileTask << { 
+    System.out.println "Gradle is Compiling ......" 
+}
+
+===========================================================
+2.Execute the below command.
+===========================================================
+D:\Example>gradle -q tasks --all
+
+------------------------------------------------------------
+All tasks runnable from root project
+------------------------------------------------------------
+Build Setup tasks
+-----------------
+init - Initializes a new Gradle build. [incubating]
+wrapper - Generates Gradle wrapper files. [incubating]
+
+Help tasks
+----------
+components - Displays the components produced by root project 'Example'. [incubating]
+dependencies - Displays all dependencies declared in root project 'Example'.
+dependencyInsight - Displays the insight into a specific dependency in root project 'Example'.
+help - Displays a help message.
+projects - Displays the sub-projects of root project 'Example'.
+properties - Displays the properties of root project 'Example'.
+tasks - Displays the tasks runnable from root project 'Example'.
+
+Other tasks
+-----------
+compileTask
+
+--------------------------------------------------------------
+D:\Example>tree/f 
+
+      Example
+		└─── build.gradle
+		└───.gradle
+			└───2.2.1
+				└───taskArtifacts
+						cache.properties
+						cache.properties.lock
+						fileSnapshots.bin
+						taskArtifacts.bin
+
+===========================================================
+$> gradle -q compileTask
+===========================================================
+D:\Example>gradle -q compileTask
+Gradle is Compiling ......
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Exmaples.2
+===========================================================
+1.Create a Dir and create a file build.gradle inside.
+===========================================================
+task compileTask << {
+ System.out.println "Gradle is Compiling ......" 
+}
+
+task buildTask << {
+ System.out.println "Gradle is Building......"
+}
+
+===========================================================
+2.Execute the below command.
+===========================================================
+D:\Example>gradle -q tasks --all
+
+------------------------------------------------------------
+All tasks runnable from root project
+------------------------------------------------------------
+
+Build Setup tasks
+-----------------
+init - Initializes a new Gradle build. [incubating]
+wrapper - Generates Gradle wrapper files. [incubating]
+
+Help tasks
+----------
+components - Displays the components produced by root project 'Example'. [incubating]
+dependencies - Displays all dependencies declared in root project 'Example'.
+dependencyInsight - Displays the insight into a specific dependency in root project 'Example'.
+help - Displays a help message.
+projects - Displays the sub-projects of root project 'Example'.
+properties - Displays the properties of root project 'Example'.
+tasks - Displays the tasks runnable from root project 'Example'.
+
+Other tasks
+-----------
+buildTask
+compileTask
+--------------------------------------------------------------
+D:\Example>tree/f
+Folder PATH listing
+Volume serial number is 3C94-3281
+D:
+Example
+│ -- build.gradle
+└───.gradle
+    └───2.2.1
+        └───taskArtifacts
+                cache.properties
+                cache.properties.lock
+                fileSnapshots.bin
+                taskArtifacts.bin
+===========================================================
+$> gradle -q compileTask
+===========================================================
+D:\Example>gradle -q compileTask
+compiling..
+
+D:\Example>gradle -q buildTask
+building..
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Exmaples.3
+===========================================================
+1.Create a Dir and create a file build.gradle inside.
+===========================================================
+defaultTasks 'buildTask'
+
+task compileTask << {
+  System.out.println "Gradle is Compiling ......" 
+}
+
+task buildTask << {
+  System.out.println "Gradle is Building......"
+}
+
+===========================================================
+2.Execute the below command.
+===========================================================
+D:\Example>gradle -q tasks --all
+
+D:\Example>gradle -q tasks
+
+------------------------------------------------------------
+All tasks runnable from root project
+------------------------------------------------------------
+
+Default tasks: buildTask
+
+Build Setup tasks
+-----------------
+init - Initializes a new Gradle build. [incubating]
+wrapper - Generates Gradle wrapper files. [incubating]
+
+Help tasks
+----------
+components - Displays the components produced by root project 'Example'. [incubating]
+dependencies - Displays all dependencies declared in root project 'Example'.
+dependencyInsight - Displays the insight into a specific dependency in root project 'Example'.
+help - Displays a help message.
+projects - Displays the sub-projects of root project 'Example'.
+properties - Displays the properties of root project 'Example'.
+tasks - Displays the tasks runnable from root project 'Example'.
+
+Other tasks
+-----------
+buildTask
+compileTask
+
+To see all tasks and more detail, run with --all.
+D:\Example>
+
+===========================================================
+$> gradle -q 
+===========================================================
+D:\Example>gradle -q
+Gradle is Building......
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Exmaples.4
+===========================================================
+1.Create a Dir and create a file build.gradle inside.
+===========================================================
+defaultTasks 'buildTask'
+
+task compileTask << {
+  System.out.println "Gradle is Compiling ......" 
+}
+
+task buildTask (dependsOn:compileTask) << {
+  System.out.println "Gradle is Building......"
+}
+===========================================================
+2.Execute the below command.
+===========================================================
+D:\Example>gradle -q tasks --all
+
+------------------------------------------------------------
+All tasks runnable from root project
+------------------------------------------------------------
+
+Default tasks: buildTask
+
+Build Setup tasks
+-----------------
+init - Initializes a new Gradle build. [incubating]
+wrapper - Generates Gradle wrapper files. [incubating]
+
+Help tasks
+----------
+components - Displays the components produced by root project 'Example'. [incubating]
+dependencies - Displays all dependencies declared in root project 'Example'.
+dependencyInsight - Displays the insight into a specific dependency in root project 'Example'.
+help - Displays a help message.
+projects - Displays the sub-projects of root project 'Example'.
+properties - Displays the properties of root project 'Example'.
+tasks - Displays the tasks runnable from root project 'Example'.
+
+Other tasks
+-----------
+buildTask
+
+To see all tasks and more detail, run with --all.
+===========================================================
+D:\Example>gradle -q
+===========================================================
+D:\Example>gradle -q
+Gradle is Compiling ......
+Gradle is Building......
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+1.Examples. For java Project Without Any Dependency
+===========================================================
+1.Create a Dir and create a file build.gradle inside.
+===========================================================
+apply plugin: "java"
+
+
+Create a Dir structure manually 
+-------------------------------
+D:\Example>mkdir src\main\java
+D:\Example>mkdir src\test\java
+D:\Example>mkdir src\main\resources
+D:\Example>mkdir src\test\resources
+
+D:\Example>tree/f
+D:Example
+	│   build.gradle
+	│
+	└───src
+		├───main
+		│   ├───java
+		│   └───resources
+		└───test
+			├───java
+			└───resources
+
+===========================================================
+D:\Example>gradle tasks
+:tasks
+
+------------------------------------------------------------
+All tasks runnable from root project
+------------------------------------------------------------
+
+Build tasks
+-----------
+assemble - Assembles the outputs of this project.
+build - Assembles and tests this project.
+buildDependents - Assembles and tests this project and all projects that depend on it.
+buildNeeded - Assembles and tests this project and all projects it depends on.
+classes - Assembles classes 'main'.
+clean - Deletes the build directory.
+jar - Assembles a jar archive containing the main classes.
+testClasses - Assembles classes 'test'.
+
+Build Setup tasks
+-----------------
+init - Initializes a new Gradle build. [incubating]
+wrapper - Generates Gradle wrapper files. [incubating]
+
+Documentation tasks
+-------------------
+javadoc - Generates Javadoc API documentation for the main source code.
+
+Help tasks
+----------
+components - Displays the components produced by root project 'Example'. [incubating]
+dependencies - Displays all dependencies declared in root project 'Example'.
+dependencyInsight - Displays the insight into a specific dependency in root project 'Example'.
+help - Displays a help message.
+projects - Displays the sub-projects of root project 'Example'.
+properties - Displays the properties of root project 'Example'.
+tasks - Displays the tasks runnable from root project 'Example'.
+
+Verification tasks
+------------------
+check - Runs all checks.
+test - Runs the unit tests.
+
+Rules
+-----
+Pattern: clean<TaskName>: Cleans the output files of a task.
+Pattern: build<ConfigurationName>: Assembles the artifacts of a configuration.
+Pattern: upload<ConfigurationName>: Assembles and uploads the artifacts belonging to a configuration
+.
+
+To see all tasks and more detail, run with --all.
+
+BUILD SUCCESSFUL
+
+Total time: 7.41 secs
+
+---------------------------------------------------------------
+D:\Example>tree/f
+Folder PATH listing
+Volume serial number is 3C94-3281
+D:Example
+	│   build.gradle
+	│
+	├───.gradle
+	│   └───2.2.1
+	│       └───taskArtifacts
+	│               cache.properties
+	│               cache.properties.lock
+	│               fileSnapshots.bin
+	│               taskArtifacts.bin
+	└───src
+		├───main
+		│   ├───java
+		│   └───resources
+		└───test
+			├───java
+			└───resources
+
+--------------------------------------------------------------
+Create the Java File inside the src\main\java directory.
+
+D:\Example>mkdir src\main\java\com\adarsh\sample
+go to location and create a java File .
+
+------------------------------------------------------------
+package com.adarsh.sample;
+
+public class ApplicationMain{
+
+   public static void main(String args[]){
+       
+	    System.out.println("Welcome to Gradle World");
+   }
+}
+------------------------------------------------------------
+
+
+add the following into build.gradle file
+--------------------------------------------
+apply plugin: "java"
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+sourceSets{
+  main.java.srcDir "src/main"
+  test.java.srcDir "src/test"
+}
+
+jar{
+  manifest.attributes "Main-Class":"com.adarsh.sample.ApplicationMain"
+}
+
+--------------------------------------------------------------
+D:\Example>mkdir src\main\java\com\adarsh\sample
+
+D:\Example>gradle clean
+:clean
+BUILD SUCCESSFUL
+Total time: 4.59 secs
+
+D:\Example>gradle build
+:compileJava
+:processResources UP-TO-DATE
+:classes
+:jar
+:assemble
+:compileTestJava UP-TO-DATE
+:processTestResources UP-TO-DATE
+:testClasses UP-TO-DATE
+:test UP-TO-DATE
+:check UP-TO-DATE
+:build
+BUILD SUCCESSFUL
+Total time: 5.574 secs
+
+D:\Example>gradle assemble
+:compileJava UP-TO-DATE
+:processResources UP-TO-DATE
+:classes UP-TO-DATE
+:jar UP-TO-DATE
+:assemble UP-TO-DATE
+BUILD SUCCESSFUL
+Total time: 4.561 secs
+
+D:\Example>gradle test
+:compileJava
+:processResources UP-TO-DATE
+:classes
+:compileTestJava UP-TO-DATE
+:processTestResources UP-TO-DATE
+:testClasses UP-TO-DATE
+:test UP-TO-DATE
+BUILD SUCCESSFUL
+--------------------------------------------------------------
+To Execute the jar file which  was created by maven 
+--------------------------------------------------------------
+D:\Example>java -jar build\libs\Example.jar
+Welcome to Gradle World
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+1.Examples. For java Project With Any Dependency
+===========================================================
+1.Create a Dir and create a file build.gradle inside.
+===========================================================
+apply plugin: "java"
+
+
+Create a Dir structure manually 
+-------------------------------
+D:\Example>mkdir src\main\java
+D:\Example>mkdir src\test\java
+D:\Example>mkdir src\main\resources
+D:\Example>mkdir src\test\resources
+
+D:\Example>tree/f
+D:Example
+	│   build.gradle
+	└───src
+		├───main
+		│   ├───java
+		│   └───resources
+		└───test
+			├───java
+			└───resources
+--------------------------------------------------
+Create the Java File inside the src\main\java directory.
+
+D:\Example>mkdir src\main\java\com\adarsh\sample
+go to location and create a java File .			
+--------------------------------------------------			
+package com.adarsh.sample;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+public class ApplicationMain{
+
+   private static final Logger logger = LoggerFactory.getLogger(ApplicationMain.class);
+   
+   public static void main(String args[]){
+       logger.debug("Main Method Started ");
+	    System.out.println("Welcome to Gradle World");
+       logger.debug("Main Method Ended ");
+   }
+   
+   public String applicationMainMehod(String name){
+       logger.debug("applicationMainMehod Method Started ");
+	      System.out.println("Welcome to Gradle Test World");
+       logger.debug("applicationMainMehod Method Ended ");
+	   return name;
+   }
+
+}
+------------------------------------------------------------
+go to the both location and create logback.xml file 
+src\main\resources\logback.xml file
+src\test\resources\logback.xml file
+
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+ 
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+	  <layout class="ch.qos.logback.classic.PatternLayout">
+ 
+		<Pattern>
+			%-5level %logger{36} - %msg%n
+		</Pattern>
+ 
+	  </layout>
+	</appender>
+ 
+	<root level="debug">
+	  <appender-ref ref="STDOUT" />
+	</root>
+ 
+</configuration>
+------------------------------------------------------------
+Create the Java File inside the src\test\java directory.
+
+D:\Example>mkdir src\test\java\com\adarsh\sample
+go to location and create a java File .	
+------------------------------------------------------------
+package com.adarsh.sample;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.junit.*;
+import static org.junit.Assert.*;
+
+public class TestApplicationMain{
+
+   private static final Logger logger = LoggerFactory.getLogger(TestApplicationMain.class);
+   
+   @Test
+   public void testApplicationMainMehod(){
+       String result = new ApplicationMain().applicationMainMehod("Adarsh");
+	   assertEquals("Adarsh", result);
+   }
+}
+----------------------------------------------------------------
+Add following in build.gradle file.
+----------------------------------------------------------------
+
+repositories{
+   mavenCentral()
+}
+apply plugin: "java"
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+
+dependencies{
+   testCompile 'junit:junit:[4,)'
+   compile 'ch.qos.logback:logback-classic:1.1.2' 
+}
+
+test {
+    testLogging {
+       // Show that tests are run in the command-line output
+        events 'started', 'passed'
+    }
+}
+
+sourceSets{
+  main.java.srcDir "src/main"
+  test.java.srcDir "src/test"
+}
+
+jar{
+  from configurations.compile.collect { zipTree it }
+  manifest.attributes "Main-Class":"com.adarsh.sample.ApplicationMain"
+}
+--------------------------------------------------------------------------		
+D:Exmaple
+	│   build.gradle
+	├───.gradle
+	│   └───2.2.1
+	│       └───taskArtifacts
+	│               cache.properties
+	│               cache.properties.lock
+	│               fileHashes.bin
+	│               fileSnapshots.bin
+	│               outputFileStates.bin
+	│               taskArtifacts.bin
+	└───src
+		├───main
+		│   ├───java
+		│   │   └───com
+		│   │       └───adarsh
+		│   │           └───sample
+		│   │                   ApplicationMain.java
+		│   └───resources
+		│           logback.xml	
+		└───test
+			├───java
+			│   └───com
+			│       └───adarsh
+			│           └───sample
+			│                   TestApplicationMain.jav
+			└───resources
+					logback.xml
+--------------------------------------------------------------
+D:\Example> gradle clean
+D:\Example> gradle tasks
+D:\Example> gradle build
+D:\Example> gradle assemble
+D:\Example>java -jar build\libs\Example.jar
+-----------------------------------------------------------------
+
+D:\>mkdir MyWebApplication\src\main\java
+D:\>mkdir MyWebApplication\src\main\resources
+D:\>mkdir MyWebApplication\src\main\webapp\WEB-INF
+D:\>cd MyWebApplication
+D:\MyWebApplication>tree/f
+
+D:MyWebApplication
+	└───src
+		└───main
+			├───java
+			├───resources
+			└───webapp
+				└───WEB-INF
+D:\MyWebApplication>mkdir src\main\java\com\adarsh\servlet
+
+D:\MyWebApplication>tree/f
+
+D:MyWebApplication
+		├─── build.gradle
+		│
+		└───src
+			└───main
+				├───java
+				│   └───com
+				│       └───adarsh
+				│           └───servlet
+				│                   HelloWorldServlet.java
+				├───resources
+				└───webapp
+					└───WEB-INF
+							web.xml
+
+
+D:\MyWebApplication>gradle clean
+D:\MyWebApplication>gradle tasks
+D:\MyWebApplication>gradle build
+D:\MyWebApplication>gradle assemble
+
+D:\MyWebApplication>tree/f
+D:MyWebApplication
+		│   build.gradle
+		│
+		├───.gradle
+		│   └───2.2.1
+		│       └───taskArtifacts
+		│               cache.properties
+		│               cache.properties.lock
+		│               fileHashes.bin
+		│               fileSnapshots.bin
+		│               outputFileStates.bin
+		│               taskArtifacts.bin
+		├───build
+		│   ├───classes
+		│   │   └───main
+		│   │       └───com
+		│   │           └───adarsh
+		│   │               └───servlet
+		│   │                       HelloWorldServlet.class
+		│   ├───dependency-cache
+		│   ├───libs
+		│   │       MyWebApplication.war
+		│   └───tmp
+		│       ├───compileJava
+		│       └───war
+		│               MANIFEST.MF
+		└───src
+			└───main
+				├───java
+				│   └───com
+				│       └───adarsh
+				│           └───servlet
+				│                   HelloWorldServlet.java
+				├───resources
+				└───webapp
+					└───WEB-INF
+							web.xml
+
+----------------------------------------------
+build.gradle							
+----------------------------------------------
+apply plugin: 'java' 
+apply plugin: 'war' 
+
+repositories {
+  mavenCentral()
+}
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+dependencies {
+  providedCompile 'javax.servlet:servlet-api:2.5'
+  runtime 'javax.servlet:jstl:1.1.2'
+}
+
+----------------------------------------------
+HelloWorldServlet.java						
+----------------------------------------------
+package com.adarsh.servlet;
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class HelloWorldServlet extends HttpServlet {
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)  
+            throws ServletException, IOException {
+        resp.getOutputStream().write("Hello World.".getBytes());
+    }
+}
+----------------------------------------------
+web.xml						
+----------------------------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+                   http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+  <servlet>
+    <display-name>HelloWorldServlet</display-name>
+    <servlet-name>HelloWorldServlet</servlet-name>
+    <servlet-class>com.adarsh.servlet.HelloWorldServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>HelloWorldServlet</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>  
+</web-app>

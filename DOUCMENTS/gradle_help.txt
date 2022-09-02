@@ -1,0 +1,88 @@
+#To genrate a java based directory structure in gradle
+> gradle init --type java-library
+---------------------------------------
+C:\Users\adarkuma\TestG>gradle init --type java-library
+:wrapper
+:init
+
+BUILD SUCCESSFUL
+
+Total time: 2.556 secs
+---------------------------------------
+C:\Users\adarkuma\TestG>tree/f
+Folder PATH listing for volume os
+Volume serial number is C0B1-1385
+C:.
+│   build.gradle
+│   gradlew
+│   gradlew.bat
+│   settings.gradle
+├───.gradle
+│   └───2.12
+│       └───taskArtifacts
+│               cache.properties
+│               cache.properties.lock
+│               fileHashes.bin
+│               fileSnapshots.bin
+│               outputFileStates.bin
+│               taskArtifacts.bin
+├───gradle
+│   └───wrapper
+│           gradle-wrapper.jar
+│           gradle-wrapper.properties
+└───src
+    ├───main
+    │   └───java
+    │           Library.java
+    └───test
+        └───java
+                LibraryTest.java
+---------------------------------------
+1.settings.gradle 
+/* can see the project name */
+rootProject.name = 'TestG'
+---------------------------------------
+2.build.gradle
+#Add following contents
+.......................................
+
+apply plugin: 'java'
+apply plugin: 'maven'
+
+group = 'TestG'
+version = '1.0.0-SNAPSHOT'
+
+description = "TestG Sample Gradle Application"
+
+sourceCompatibility = 1.8
+
+compileJava {
+    targetCompatibility = 1.8
+}
+
+
+repositories {
+    mavenCentral()
+	mavenLocal()
+}
+
+applicationDefaultJvmArgs = [
+        "-Xmx1024m","-XX:MaxPermSize=256m"
+]
+
+dependencies {
+    compile 'org.slf4j:slf4j-api:1.7.5'
+    testCompile 'junit:junit:4.11'
+}
+
+jar {
+    baseName = 'TestG'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.4'
+}
+---------------------------------------
+
+
+

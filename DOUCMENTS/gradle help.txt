@@ -1,0 +1,1048 @@
+#installation process
+-------------------------
+1.download the binary from gradle site 
+2.set the GRADLE_HOME in the env variable 
+3.setting the %GRADLE_HOME%\bin in the path variable
+4.checking the installation by issuein command 
+ >gradle -v
+
+------------------------------------------------------------
+Gradle 2.13
+------------------------------------------------------------
+Build time:   2016-04-25 04:10:10 UTC
+Build number: none
+Revision:     3b427b1481e46232107303c90be7b05079b05b1c
+
+Groovy:       2.4.4
+Ant:          Apache Ant(TM) version 1.9.6 compiled on June 29 2015
+JVM:          1.8.0_92 (Oracle Corporation 25.92-b14)
+OS:           Windows 8.1 6.3 amd64 
+
+#######################################################################
+#To genrate a java based directory structure in gradle
+> gradle init --type java-library
+---------------------------------------
+C:\Users\adarkuma\TestG>gradle init --type java-library
+:wrapper
+:init
+
+BUILD SUCCESSFUL
+
+Total time: 2.556 secs
+---------------------------------------
+C:\Users\adarkuma\TestG>tree/f
+Folder PATH listing for volume os
+Volume serial number is C0B1-1385
+C:.
+│   build.gradle
+│   gradlew
+│   gradlew.bat
+│   settings.gradle
+├───.gradle
+│   └───2.12
+│       └───taskArtifacts
+│               cache.properties
+│               cache.properties.lock
+│               fileHashes.bin
+│               fileSnapshots.bin
+│               outputFileStates.bin
+│               taskArtifacts.bin
+├───gradle
+│   └───wrapper
+│           gradle-wrapper.jar
+│           gradle-wrapper.properties
+└───src
+    ├───main
+    │   └───java
+    │           Library.java
+    └───test
+        └───java
+                LibraryTest.java
+---------------------------------------
+1.settings.gradle 
+/* can see the project name */
+rootProject.name = 'TestG'
+---------------------------------------
+2.build.gradle
+#Add following contents
+.......................................
+
+apply plugin: 'java'
+apply plugin: 'maven'
+
+group = 'TestG'
+version = '1.0.0-SNAPSHOT'
+
+description = "TestG Sample Gradle Application"
+
+sourceCompatibility = 1.8
+
+compileJava {
+    targetCompatibility = 1.8
+}
+
+
+repositories {
+    mavenCentral()
+	mavenLocal()
+}
+
+applicationDefaultJvmArgs = [
+        "-Xmx1024m","-XX:MaxPermSize=256m"
+]
+
+dependencies {
+    compile 'org.slf4j:slf4j-api:1.7.5'
+    testCompile 'junit:junit:4.11'
+}
+
+jar {
+    baseName = 'TestG'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.4'
+}
+
+---------------------------------------
+PLUGINS IN GRADELS
+(https://docs.gradle.org/2.4/userguide/standard_plugins.html)
+@=>Plugins add new task
+@=>Gradle, script plugins and binary plugins
+->Script plugins are additional build scripts that further configure the build and usually implement a declarative approach 
+to manipulating the build. They are typically used within a build although they can be externalized and accessed from a remote 
+location. 
+->Binary plugins are classes that implement the Plugin interface and adopt a programmatic approach to manipulating the 
+build. Binary plugins can reside within a build script, within the project hierarchy or externally in a plugin jar
+
+Standard Gradle plugins
+--------------------------
+@=>Language plugins
+..........................
+
+#=>java	java-base	-	
+Adds Java compilation, testing and bundling capabilities to a project. 
+
+#=>groovy	java, groovy-base	-	
+Adds support for building Groovy projects.
+
+#=>scala	java, scala-base	-	
+Adds support for building Scala projects.
+
+#=>antlr	java	-	
+Adds support for generating parsers using Antlr.
+
+------------------------------
+@=>Integration plugins
+............................
+#=>application	java	-	
+Adds tasks for running and bundling a Java project as a command-line application.
+
+#=>ear	-	java	
+Adds support for building J2EE applications.
+
+#=>jetty	war	-	
+Deploys your web application to a Jetty web container embedded in the build. 
+
+#=>maven	-	java, war	
+Adds support for publishing artifacts to Maven repositories.
+
+#=>osgi	java-base	java	
+Adds support for building OSGi bundles.
+
+#=>war	java	-	
+Adds support for assembling web application WAR files. 
+
+------------------------------------
+@=>Software development plugins
+.................................
+#=>eclipse	-	java,groovy, scala	
+Generates files that are used by Eclipse IDE, thus making it possible to import the project into Eclipse.
+
+#=>eclipse-wtp	-	ear, war	
+Does the same as the eclipse plugin plus generates eclipse WTP (Web Tools Platform) configuration files. 
+After importing to eclipse your war/ear projects should be configured to work with WTP.
+
+#=>idea	-	java	
+Generates files that are used by Intellij IDEA IDE, thus making it possible to import the project into IDEA.
+
+
+--------------------------------
+Tasks of a Java Project
+--------------------------------
+#=> To Get the list of the tasks in the java project
+  DRIVE:/>gradle tasks
+  
+#=>The assemble task compiles the source code of our application and packages it to a jar file. This task doesn’t run the unit tests.
+   DRIVE:/>gradle assemble
+
+#=>The build task performs a full build of the project.
+   DRIVE:/>gradle build
+
+#=>The clean task deletes thcompileJavae build directory.
+  DRIVE:/>gradle clean 
+
+#=>The compileJava task compiles the source code of our application.
+  DRIVE:/>gradle compileJava
+  
+#=>To Run the appliation 
+ DRIVE:/>java -jar <jarfilename>.jar
+ 
+#=>To Run Junit Test 
+ DRIVE:/>gradle test
+
+
+-------------------------------------------------
+Adding Main Class in the Jar file  
+-------------------------------------------------
+add the below code in  build.gradle file
+
+apply plugin: 'java'
+ 
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.espark.adarsh.gradle.EsparkMain'
+    }
+} 
+
+###############################################################################################################################
+===============================================================================================================================
+GRADLE STANDALONE APPLICATION 
+===============================================================================================================================
+C:\GRADLE>gradle init
+:wrapper
+:init
+BUILD SUCCESSFUL
+Total time: 10.06 secs
+
+C:\GRADLE>tree/f
+C:.
+│   build.gradle
+│   gradlew
+│   gradlew.bat
+│   settings.gradle
+│
+├───.gradle
+│   └───2.13
+│       └───taskArtifacts
+│               cache.properties
+│               cache.properties.lock
+│               fileHashes.bin
+│               fileSnapshots.bin
+│               taskArtifacts.bin
+│
+└───gradle
+    └───wrapper
+            gradle-wrapper.jar
+            gradle-wrapper.properties
+
+.................................................................................
+NOTE ADD BELOW CODE TO setting.gradle file 
+----------------------------------------------
+group 'com.esarpk.adarsh'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin:'templates' 
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+   compile 'org.slf4j:slf4j-api:1.7.21'
+    testCompile 'junit:junit:4.12'
+}
+
+buildscript {
+    repositories {
+        maven {
+            url 'http://dl.bintray.com/cjstehno/public'
+        }
+    }
+    dependencies {
+        classpath 'gradle-templates:gradle-templates:1.5'
+    }
+}
+
+
+.................................................................................
+LIST OF THE TEMPLATE TASK FOR GRADLE
+C:\GRADLE>gradle task
+:tasks
+
+------------------------------------------------------------
+All tasks runnable from root project
+------------------------------------------------------------
+
+Build tasks
+-----------
+assemble - Assembles the outputs of this project.
+build - Assembles and tests this project.
+buildDependents - Assembles and tests this project and all projects that depend on it.
+buildNeeded - Assembles and tests this project and all projects it depends on.
+classes - Assembles main classes.
+clean - Deletes the build directory.
+jar - Assembles a jar archive containing the main classes.
+testClasses - Assembles test classes.
+
+Build Setup tasks
+-----------------
+init - Initializes a new Gradle build. [incubating]
+wrapper - Generates Gradle wrapper files. [incubating]
+
+Documentation tasks
+-------------------
+javadoc - Generates Javadoc API documentation for the main source code.
+
+Help tasks
+----------
+buildEnvironment - Displays all buildscript dependencies declared in root project 'GRADLE'.
+components - Displays the components produced by root project 'GRADLE'. [incubating]
+dependencies - Displays all dependencies declared in root project 'GRADLE'.
+dependencyInsight - Displays the insight into a specific dependency in root project 'GRADLE'.
+help - Displays a help message.
+model - Displays the configuration model of root project 'GRADLE'. [incubating]
+projects - Displays the sub-projects of root project 'GRADLE'.
+properties - Displays the properties of root project 'GRADLE'.
+tasks - Displays the tasks runnable from root project 'GRADLE'.
+
+IDE tasks
+---------
+cleanIdea - Cleans IDEA project files (IML, IPR)
+idea - Generates IDEA project files (IML, IPR, IWS)
+
+Template tasks
+--------------
+createGradlePlugin - Creates a new Gradle Plugin project in a new directory named after your project.
+createGroovyClass - Creates a new Groovy class in the current project.
+createGroovyProject - Creates a new Gradle Groovy project in a new directory named after your project.
+createJavaClass - Creates a new Java class in the current project.
+createJavaProject - Creates a new Gradle Java project in a new directory named after your project.
+createScalaClass - Creates a new Scala class in the current project.
+createScalaObject - Creates a new Scala object in the current project.
+createScalaProject - Creates a new Gradle Scala project in a new directory named after your project.
+
+createWebappProject - Creates a new Gradle Webapp project in a new directory named after your project.
+exportAllTemplates - Exports all the default template files into the current directory.
+exportGroovyTemplates - Exports the default groovy template files into the current directory.
+exportJavaTemplates - Exports the default java template files into the current directory.
+exportPluginTemplates - Exports the default plugin template files into the current directory.
+exportScalaTemplates - Exports the default scala template files into the current directory.
+exportWebappTemplates - Exports the default webapp template files into the current directory.
+initGradlePlugin - Initializes a new Gradle Plugin project in the current directory.
+initGroovyProject - Initializes a new Gradle Groovy project in the current directory.
+initJavaProject - Initializes a new Gradle Java project in the current directory.
+initScalaProject - Initializes a new Gradle Scala project in the current directory.
+initWebappProject - Initializes a new Gradle Webapp project in the current directory.
+
+Verification tasks
+------------------
+check - Runs all checks.
+test - Runs the unit tests.
+
+Other tasks
+-----------
+cleanIdeaWorkspace
+
+Rules
+-----
+Pattern: clean<TaskName>: Cleans the output files of a task.
+Pattern: build<ConfigurationName>: Assembles the artifacts of a configuration.
+Pattern: upload<ConfigurationName>: Assembles and uploads the artifacts belonging to a configuration.
+
+To see all tasks and more detail, run gradle tasks --all
+To see more detail about a task, run gradle help --task <task>
+
+BUILD SUCCESSFUL
+Total time: 13.175 secs
+
+.................................................................................
+SELECT THE JAVA PROJECT REALATED PLUGINS FROM TAMPLATE TASK LIST WHICH IS THE RESULT OF PREVIOS COMMAND 
+
+C:\GRADLE>gradle initJavaProject
+:initJavaProject
+BUILD SUCCESSFUL
+Total time: 11.793 secs
+
+C:\GRADLE>gradle initJavaProject
+:initJavaProject
+BUILD SUCCESSFUL
+
+Total time: 11.793 secs
+C:\GRADLE>tree/f
+C:.
+│   build.gradle
+│   gradlew
+│   gradlew.bat
+│   LICENSE.txt
+│   settings.gradle
+│
+├───.gradle
+│   └───2.13
+│       └───taskArtifacts
+│               cache.properties
+│               cache.properties.lock
+│               fileHashes.bin
+│               fileSnapshots.bin
+│               taskArtifacts.bin
+├───gradle
+│   └───wrapper
+│           gradle-wrapper.jar
+│           gradle-wrapper.properties
+└───src
+    ├───main
+    │   ├───java
+    │   └───resources
+    └───test
+        ├───java
+        └───resources
+--------------------------------------------------------
+add the following class inside src/main/java 
+
+public class EsparkMain {
+
+    public static void main(String[] args) {
+        System.out.println("welcome to the espark world "+System.getProperty("user.name"));
+    }
+}
+--------------------------------------------------------
+ADD THE BELOW CODE IN THE setting.gradle file 
+........................................................
+
+compileJava {
+    targetCompatibility = 1.8
+}
+
+jar {
+    baseName = 'espark'
+	version = '1'
+    manifest {
+        attributes 'Main-Class': 'com.espark.adarsh.EsparkMain'
+    }
+} 
+
+--------------------------------------------------------
+TO BUILD THE GRADLE CODE 
+........................................................
+
+C:\GRADLE>gradle build
+:compileJava UP-TO-DATE
+:processResources UP-TO-DATE
+:classes UP-TO-DATE
+:jar
+:assemble
+:compileTestJava UP-TO-DATE
+:processTestResources UP-TO-DATE
+:testClasses UP-TO-DATE
+:test UP-TO-DATE
+:check UP-TO-DATE
+:build
+
+BUILD SUCCESSFUL
+Total time: 12.572 secs
+
+C:\GRADLE>tree/f
+C:.
+│   build.gradle
+│   gradlew
+│   gradlew.bat
+│   LICENSE.txt
+│   settings.gradle
+│
+├───.gradle
+│   └───2.13
+│       └───taskArtifacts
+│               cache.properties
+│               cache.properties.lock
+│               fileHashes.bin
+│               fileSnapshots.bin
+│               taskArtifacts.bin
+├───build
+│   ├───classes
+│   │   └───main
+│   │       └───com
+│   │           └───espark
+│   │               └───adarsh
+│   │                       EsparkMain.class
+│   ├───dependency-cache
+│   ├───libs
+│   │       espark-1.0-SNAPSHOT.jar
+│   └───tmp
+│       ├───compileJava
+│       │   └───emptySourcePathRef
+│       └───jar
+│               MANIFEST.MF
+├───gradle
+│   └───wrapper
+│           gradle-wrapper.jar
+│           gradle-wrapper.properties
+└───src
+    ├───main
+    │   ├───java
+    │   │   └───com
+    │   │       └───espark
+    │   │           └───adarsh
+    │   │                   EsparkMain.java
+    │   └───resources
+    └───test
+        ├───java
+        └───resources
+
+--------------------------------------------------------
+TO EXECUTE THE EXECUTABLE JAR FILE 
+........................................................
+
+C:\GRADLE\build\libs>java -jar build\libs\espark-1.0-SNAPSHOT.jar
+welcome to the espark world adarsh_k
+
+--------------------------------------------------------
+TO EXECUTE THE APPLICATION 
+
+ADD THE BELOW CODE IN THE setting.gradle file 
+........................................................
+
+apply plugin: 'application'
+mainClassName = 'com.espark.adarsh.EsparkMain'
+
+------------------------------------------------------------
+BUILD THE GRADLE APPLICATION 
+
+C:\GRADLE>gradle build
+:compileJava UP-TO-DATE
+:processResources UP-TO-DATE
+:classes UP-TO-DATE
+:jar UP-TO-DATE
+:startScripts UP-TO-DATE
+:distTar UP-TO-DATE
+:distZip UP-TO-DATE
+:assemble UP-TO-DATE
+:compileTestJava UP-TO-DATE
+:processTestResources UP-TO-DATE
+:testClasses UP-TO-DATE
+:test UP-TO-DATE
+:check UP-TO-DATE
+:build UP-TO-DATE
+
+BUILD SUCCESSFUL
+Total time: 12.637 secs
+
+-----------------------------------------------
+EXECUTE THE GRADLE APPLICATION 
+-------------------------------------------
+C:\GRADLE>gradle run
+:compileJava UP-TO-DATE
+:processResources UP-TO-DATE
+:classes UP-TO-DATE
+:run
+welcome to the espark world adarsh_k
+
+BUILD SUCCESSFUL
+Total time: 12.566 secs
+
+------------------------------------------------------
+EXECUTE THE GRADLE APPLCIATOIN WITHOUT GRADLE LOG MESSAGES 
+------------------------------------------------------
+C:\GRADLE>gradle run -q
+welcome to the espark world adarsh_k
+
+###############################################################################################################################
+================================================================================================================================
+GRADLE WEB APPLICATON 
+================================================================================================================================
+C:\GRADLE>gradle init
+:wrapper
+:init
+
+BUILD SUCCESSFUL
+
+Total time: 10.129 secs
+C:\GRADLE>tree/f
+C:.
+│   build.gradle
+│   gradlew
+│   gradlew.bat
+│   settings.gradle
+├───.gradle
+│   └───2.13
+│       └───taskArtifacts
+│               cache.properties
+│               cache.properties.lock
+│               fileHashes.bin
+│               fileSnapshots.bin
+│               taskArtifacts.bin
+└───gradle
+    └───wrapper
+            gradle-wrapper.jar
+            gradle-wrapper.properties
+........................................................................................................................			
+NOTE ADD THE FOLLWOING CODE TO build.gradle file 
+=================================================
+group 'com.esarpk.adarsh'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin:'templates' 
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "javax.servlet:servlet-api:2.5"
+    compile 'javax.servlet:jstl:1.2'
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+buildscript {
+    repositories {
+        maven {
+            url 'http://dl.bintray.com/cjstehno/public'
+        }
+    }
+    dependencies {
+        classpath 'gradle-templates:gradle-templates:1.5'
+    }
+}
+
+war {
+    archiveName 'espark.war'
+}
+
+C:\GRADLE>gradle task
+Download http://dl.bintray.com/cjstehno/public/gradle-templates/gradle-templates/1.5/gradle-templat
+s-1.5.jar
+:tasks
+
+------------------------------------------------------------
+All tasks runnable from root project
+------------------------------------------------------------
+
+Build tasks
+-----------
+assemble - Assembles the outputs of this project.
+build - Assembles and tests this project.
+buildDependents - Assembles and tests this project and all projects that depend on it.
+buildNeeded - Assembles and tests this project and all projects it depends on.
+classes - Assembles main classes.
+clean - Deletes the build directory.
+jar - Assembles a jar archive containing the main classes.
+testClasses - Assembles test classes.
+
+Build Setup tasks
+-----------------
+init - Initializes a new Gradle build. [incubating]
+wrapper - Generates Gradle wrapper files. [incubating]
+
+Documentation tasks
+-------------------
+javadoc - Generates Javadoc API documentation for the main source code.
+
+Help tasks
+----------
+buildEnvironment - Displays all buildscript dependencies declared in root project 'GRADLE'.
+components - Displays the components produced by root project 'GRADLE'. [incubating]
+dependencies - Displays all dependencies declared in root project 'GRADLE'.
+dependencyInsight - Displays the insight into a specific dependency in root project 'GRADLE'.
+help - Displays a help message.
+model - Displays the configuration model of root project 'GRADLE'. [incubating]
+projects - Displays the sub-projects of root project 'GRADLE'.
+properties - Displays the properties of root project 'GRADLE'.
+tasks - Displays the tasks runnable from root project 'GRADLE'.
+
+IDE tasks
+---------
+cleanIdea - Cleans IDEA project files (IML, IPR)
+idea - Generates IDEA project files (IML, IPR, IWS)
+
+Template tasks
+--------------
+createGradlePlugin - Creates a new Gradle Plugin project in a new directory named after your projec.
+createGroovyClass - Creates a new Groovy class in the current project.
+createGroovyProject - Creates a new Gradle Groovy project in a new directory named after your projet.
+createJavaClass - Creates a new Java class in the current project.
+createJavaProject - Creates a new Gradle Java project in a new directory named after your project.
+createScalaClass - Creates a new Scala class in the current project.
+createScalaObject - Creates a new Scala object in the current project.
+createScalaProject - Creates a new Gradle Scala project in a new directory named after your project
+
+createWebappProject - Creates a new Gradle Webapp project in a new directory named after your projet.
+exportAllTemplates - Exports all the default template files into the current directory.
+exportGroovyTemplates - Exports the default groovy template files into the current directory.
+exportJavaTemplates - Exports the default java template files into the current directory.
+exportPluginTemplates - Exports the default plugin template files into the current directory.
+exportScalaTemplates - Exports the default scala template files into the current directory.
+exportWebappTemplates - Exports the default webapp template files into the current directory.
+initGradlePlugin - Initializes a new Gradle Plugin project in the current directory.
+initGroovyProject - Initializes a new Gradle Groovy project in the current directory.
+initJavaProject - Initializes a new Gradle Java project in the current directory.
+initScalaProject - Initializes a new Gradle Scala project in the current directory.
+initWebappProject - Initializes a new Gradle Webapp project in the current directory.
+
+Verification tasks
+------------------
+check - Runs all checks.
+test - Runs the unit tests.
+
+Other tasks
+-----------
+cleanIdeaWorkspace
+
+Rules
+-----
+Pattern: clean<TaskName>: Cleans the output files of a task.
+Pattern: build<ConfigurationName>: Assembles the artifacts of a configuration.
+Pattern: upload<ConfigurationName>: Assembles and uploads the artifacts belonging to a configuratio.
+
+To see all tasks and more detail, run gradle tasks --all
+To see more detail about a task, run gradle help --task <task>
+
+BUILD SUCCESSFUL
+Total time: 16.242 secs
+........................................................................................................................
+C:\GRADLE>gradle initWebappProject
+> Building 0% > :initWebappProject
+templates> Use Jetty Plugin? (Y|n) [n] y
+:initWebappProject
+
+BUILD SUCCESSFUL
+Total time: 15.488 secs
+........................................................................................................................
+C:\GRADLE>tree/f
+C:.
+│   build.gradle
+│   gradlew
+│   gradlew.bat
+│   LICENSE.txt
+│   settings.gradle
+│
+├───.gradle
+│   └───2.13
+│       └───taskArtifacts
+│               cache.properties
+│               cache.properties.lock
+│               fileHashes.bin
+│               fileSnapshots.bin
+│               taskArtifacts.bin
+├───gradle
+│   └───wrapper
+│           gradle-wrapper.jar
+│           gradle-wrapper.properties
+└───src
+    ├───main
+    │   ├───java
+    │   ├───resources
+    │   └───webapp
+    │       └───WEB-INF
+    │               web.xml
+    └───test
+        ├───java
+        └───resources
+		
+
+-----------------------------------------------------------------------------------------------------
+ADD THE BELOW CODE IN setting.gradle file 
+
+apply plugin: "war"
+
+httpPort = 8080
+stopPort = 9080
+stopKey = "stopKey"
+.......................................................................................................	
+ADD THE SERVELT TO THE APPLICATOIN IN THE src/main/java WITH THE FOLLOWING CONTENT
+
+package com.espark.adarsh;
+
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.*;
+
+import static java.lang.System.out;
+
+/*
+* @author Adarsh
+* @author $LastChangedBy: adarsh $
+* @version $Revision: 1595 $, $Date:: 5/4/12 6:12 PM#$
+*/
+
+public class MyServlet extends HttpServlet {
+
+    static {
+        out.println("MyGenericServlet static block ");
+    }
+
+    {
+        out.println("MyGenericServlet instance block ");
+    }
+
+    public MyServlet() {
+        out.println("MyGenericServlet constructor");
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        work(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        work(req, resp);
+    }
+
+    private void work(ServletRequest servletRequest, ServletResponse servletResponse)
+            throws ServletException, IOException {
+        out.println("MyGenericServlet service()");
+        PrintWriter out = servletResponse.getWriter();
+        out.println("<h1> WELCOME TO ESPARK </h1>");
+    }
+}
+	
+.......................................................................................................		
+ADD THE BELOW MENTIONED CODE IN THE src/main/webapp/WEB-INF/web.xml 
+
+ <servlet>
+      <servlet-name>myGenericServlet</servlet-name>
+      <servlet-class>com.espark.adarsh.MyServlet</servlet-class>
+   </servlet>
+
+   <servlet-mapping>
+      <servlet-name>myGenericServlet</servlet-name>
+      <url-pattern>/myServlet</url-pattern>
+   </servlet-mapping>
+   
+.......................................................................................................		
+CREATE THE index.html FILE TO THE LOCATION src/main/webapp WITH THE FOLLOWING CONTENT 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>espark</title>
+</head>
+<body style="text-aline:center">
+  <h1> WELCOME TO ESPARK </h1>
+</body>
+</html>
+-------------------------------------------------------------------------------------------------------------
+BUILD THE GRADLE BASED WEB APP 
+
+C:\GRADLE>gradle build
+:compileJava UP-TO-DATE
+:processResources UP-TO-DATE
+:classes UP-TO-DATE
+:war UP-TO-DATE
+:assemble UP-TO-DATE
+:compileTestJava UP-TO-DATE
+:processTestResources UP-TO-DATE
+:testClasses UP-TO-DATE
+:test UP-TO-DATE
+:check UP-TO-DATE
+:build UP-TO-DATE
+
+BUILD SUCCESSFUL
+
+C:\GRADLE>tree/f
+C:.
+│   build.gradle
+│   gradlew
+│   gradlew.bat
+│   LICENSE.txt
+│   settings.gradle
+│
+├───.gradle
+│   └───2.13
+│       └───taskArtifacts
+│               cache.properties
+│               cache.properties.lock
+│               fileHashes.bin
+│               fileSnapshots.bin
+│               taskArtifacts.bin
+│
+├───build
+│   ├───classes
+│   │   └───main
+│   │       └───com
+│   │           └───espark
+│   │               └───adarsh
+│   │                       MyServlet.class
+│   ├───dependency-cache
+│   ├───libs
+│   │       espark.war
+│   └───tmp
+│       ├───compileJava
+│       │   └───emptySourcePathRef
+│       ├───jettyRunWar
+│       │   ├───jsp
+│       │   └───webapp
+│       │       │   index.html
+│       │       │
+│       │       ├───META-INF
+│       │       │       MANIFEST.MF
+│       │       └───WEB-INF
+│       │           │   web.xml
+│       │           ├───classes
+│       │           │   └───com
+│       │           │       └───espark
+│       │           │           └───adarsh
+│       │           │                   MyServlet.class
+│       │           └───lib
+│       │                   jstl-1.2.jar
+│       │                   servlet-api-2.5.jar
+│       └───war
+│               MANIFEST.MF
+├───gradle
+│   └───wrapper
+│           gradle-wrapper.jar
+│           gradle-wrapper.properties
+└───src
+    ├───main
+    │   ├───java
+    │   │   └───com
+    │   │       └───espark
+    │   │           └───adarsh
+    │   │                   MyServlet.java
+    │   ├───resources
+    │   └───webapp
+    │       │   index.html
+    │       └───WEB-INF
+    │              web.xml
+    └───test
+        ├───java
+        └───resources
+------------------------------------------------------------------------------------------------
+C:\GRADLE>gradle tasks
+:tasks
+
+------------------------------------------------------------
+All tasks runnable from root project
+------------------------------------------------------------
+
+Build tasks
+-----------
+assemble - Assembles the outputs of this project.
+build - Assembles and tests this project.
+buildDependents - Assembles and tests this project and all projects that depend on it.
+buildNeeded - Assembles and tests this project and all projects it depends on.
+classes - Assembles main classes.
+clean - Deletes the build directory.
+jar - Assembles a jar archive containing the main classes.
+testClasses - Assembles test classes.
+war - Generates a war archive with all the compiled classes, the web-app content and the libraries.
+
+Build Setup tasks
+-----------------
+init - Initializes a new Gradle build. [incubating]
+wrapper - Generates Gradle wrapper files. [incubating]
+
+Documentation tasks
+-------------------
+javadoc - Generates Javadoc API documentation for the main source code.
+
+Help tasks
+----------
+buildEnvironment - Displays all buildscript dependencies declared in root project 'GRADLE'.
+components - Displays the components produced by root project 'GRADLE'. [incubating]
+dependencies - Displays all dependencies declared in root project 'GRADLE'.
+dependencyInsight - Displays the insight into a specific dependency in root project 'GRADLE'.
+help - Displays a help message.
+model - Displays the configuration model of root project 'GRADLE'. [incubating]
+projects - Displays the sub-projects of root project 'GRADLE'.
+properties - Displays the properties of root project 'GRADLE'.
+tasks - Displays the tasks runnable from root project 'GRADLE'.
+
+IDE tasks
+---------
+cleanIdea - Cleans IDEA project files (IML, IPR)
+idea - Generates IDEA project files (IML, IPR, IWS)
+
+Template tasks
+--------------
+createGradlePlugin - Creates a new Gradle Plugin project in a new directory named after your project.
+createGroovyClass - Creates a new Groovy class in the current project.
+createGroovyProject - Creates a new Gradle Groovy project in a new directory named after your project.
+createJavaClass - Creates a new Java class in the current project.
+createJavaProject - Creates a new Gradle Java project in a new directory named after your project.
+createScalaClass - Creates a new Scala class in the current project.
+createScalaObject - Creates a new Scala object in the current project.
+createScalaProject - Creates a new Gradle Scala project in a new directory named after your project.
+
+createWebappProject - Creates a new Gradle Webapp project in a new directory named after your project.
+exportAllTemplates - Exports all the default template files into the current directory.
+exportGroovyTemplates - Exports the default groovy template files into the current directory.
+exportJavaTemplates - Exports the default java template files into the current directory.
+exportPluginTemplates - Exports the default plugin template files into the current directory.
+exportScalaTemplates - Exports the default scala template files into the current directory.
+exportWebappTemplates - Exports the default webapp template files into the current directory.
+initGradlePlugin - Initializes a new Gradle Plugin project in the current directory.
+initGroovyProject - Initializes a new Gradle Groovy project in the current directory.
+initJavaProject - Initializes a new Gradle Java project in the current directory.
+initScalaProject - Initializes a new Gradle Scala project in the current directory.
+initWebappProject - Initializes a new Gradle Webapp project in the current directory.
+
+Verification tasks
+------------------
+check - Runs all checks.
+test - Runs the unit tests.
+
+Web application tasks
+---------------------
+jettyRun - Uses your files as and where they are and deploys them to Jetty.
+jettyRunWar - Assembles the webapp into a war and deploys it to Jetty.
+jettyStop - Stops Jetty.
+
+Other tasks
+-----------
+cleanIdeaWorkspace
+
+Rules
+-----
+Pattern: clean<TaskName>: Cleans the output files of a task.
+Pattern: build<ConfigurationName>: Assembles the artifacts of a configuration.
+Pattern: upload<ConfigurationName>: Assembles and uploads the artifacts belonging to a configuration
+
+To see all tasks and more detail, run gradle tasks --all
+To see more detail about a task, run gradle help --task <task>
+
+BUILD SUCCESSFUL
+Total time: 12.145 secs
+
+-------------------------------------------------------------------------------------------------------------------
+TO RUN THE JETTY SERVER AND DEPLOY THE WEB APP INTO THAT
+
+C:\GRADLE>gradle jettyRunWar
+:compileJava
+:processResources UP-TO-DATE
+:classes
+:war UP-TO-DATE
+> Building 80% > :jettyRunWar > Running at http://localhost:8080/GRADLE
+-------------------------------------------------------------------------------------------------------------------
+
+HIT THE URL FOR index.jsp
+http://localhost:8080/GRADLE
+
+HIT THE URL FOR SERVLET 
+http://localhost:8080/GRADLE/myServlet
+
+log msg for MyServlet 
+--------------------------
+MyGenericServlet static block
+MyGenericServlet instance block
+MyGenericServlet constructor
+MyGenericServlet service()
+> Building 80% > :jettyRunWar > Running at http://localhost:8080/GRADLE
+--------------------------
+
+###############################################################################################################################

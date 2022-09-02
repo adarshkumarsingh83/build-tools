@@ -1,5 +1,5 @@
-* c:/>mvn install:install-file -Dfile=<path-to-file with jar file name> -DgroupId=<group-id> \
-    -DartifactId=<artifact-id> -Dversion=<version> -Dpackaging=<packaging>
+* c:/>mvn install:install-file -Dfile=[path-to-file with jar file name] -DgroupId=[group-id] \
+    -DartifactId=[artifact-id] -Dversion=[version] -Dpackaging=[packaging]
 
 ```	
 <dependency>
